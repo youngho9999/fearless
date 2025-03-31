@@ -14,7 +14,7 @@ public class GameController {
     private final GameService gameService;
 
     @PostMapping
-    public Game createGame(@RequestBody final GameCreateRequest request) {
+    public String createGame(@RequestBody final GameCreateRequest request) {
         return gameService.createGame(request);
     }
 
