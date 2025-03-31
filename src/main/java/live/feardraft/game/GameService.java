@@ -11,7 +11,11 @@ public class GameService {
     private final GameRepository gameRepository;
 
     public String createGame(GameCreateRequest request) {
+
+        String gameId = StringUtils.deleteAny(java.util.UUID.randomUUID().toString(), "-").substring(0, 10);
+
         Game game = new Game(
+                gameId,
                 request.getBlueTeam(),
                 request.getRedTeam(),
                 request.getModeType(),
@@ -20,8 +24,7 @@ public class GameService {
         );
 
         gameRepository.save(game);
-
-        return StringUtils.deleteAny(java.util.UUID.randomUUID().toString(), "-").substring(0, 10);
+        return game.getGameId();
     }
 
 }
