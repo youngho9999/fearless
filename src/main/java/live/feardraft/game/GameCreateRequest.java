@@ -3,7 +3,6 @@ package live.feardraft.game;
 import live.feardraft.game.types.ModeType;
 import live.feardraft.game.types.SeriesType;
 import live.feardraft.game.types.TimerType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
