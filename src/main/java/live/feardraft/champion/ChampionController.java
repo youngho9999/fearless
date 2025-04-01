@@ -18,9 +18,10 @@ public class ChampionController {
         championService.insertChampion();
     }
 
-    @GetMapping("/champions")
-    public List<Champion> getAllChampions() {
-        return championService.getAllChampions();
+    @GetMapping("/setlane")
+    public void setLane() {
+        championService.setLane();
     }
+
 
 }
