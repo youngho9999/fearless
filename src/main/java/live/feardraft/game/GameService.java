@@ -1,8 +1,12 @@
 package live.feardraft.game;
 
+import live.feardraft.game.dto.GameCreateRequest;
+import live.feardraft.game.dto.GameSettingResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +29,12 @@ public class GameService {
 
         gameRepository.save(game);
         return game.getGameId();
+    }
+
+    public GameSettingResponse getGameSettings(String gameId) {
+        Game game = gameRepository.findById(gameId).orElse(null);
+
+        return new GameSettingResponse(game);
     }
 
 }

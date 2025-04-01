@@ -1,4 +1,4 @@
-package live.feardraft.game;
+package live.feardraft.game.dto;
 
 import live.feardraft.game.types.ModeType;
 import live.feardraft.game.types.SeriesType;
