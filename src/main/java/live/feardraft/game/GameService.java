@@ -2,6 +2,7 @@ package live.feardraft.game;
 
 import live.feardraft.game.dto.GameCreateRequest;
 import live.feardraft.game.dto.GameSettingResponse;
+import live.feardraft.game.types.GameState;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -24,7 +25,8 @@ public class GameService {
                 request.getRedTeam(),
                 request.getModeType(),
                 request.getSeriesType(),
-                request.getTimerType()
+                request.getTimerType(),
+                GameState.NOT_READY
         );
 
         gameRepository.save(game);

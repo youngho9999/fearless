@@ -1,6 +1,7 @@
 package live.feardraft.game;
 
 import jakarta.persistence.*;
+import live.feardraft.game.types.GameState;
 import live.feardraft.game.types.ModeType;
 import live.feardraft.game.types.SeriesType;
 import live.feardraft.game.types.TimerType;
@@ -25,4 +26,7 @@ public class Game {
     private SeriesType seriesType;
     @Enumerated(EnumType.STRING)
     private TimerType timerType;
+    @Enumerated(EnumType.STRING)
+    private GameState gameState;
+
 }
