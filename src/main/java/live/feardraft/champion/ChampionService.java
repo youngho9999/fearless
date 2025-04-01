@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -63,7 +64,13 @@ public class ChampionService {
 
             champion.setPositionList(laneStrings);
         }
+    }
 
+    public List<ChampionResponse> getAllChampions() {
+        List<Champion> champions = championRepository.findAll();
+        return champions.stream().map(ChampionResponse::of)
+                .sorted(Comparator.comparing(ChampionResponse::getName))
+                .toList();
     }
 
 }

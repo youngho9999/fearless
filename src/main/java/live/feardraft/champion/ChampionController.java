@@ -23,5 +23,9 @@ public class ChampionController {
         championService.setLane();
     }
 
+    @GetMapping("/champions")
+    public List<ChampionResponse> getAllChampions() {
+        return championService.getAllChampions();
+    }
 
 }
