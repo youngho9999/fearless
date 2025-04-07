@@ -16,6 +16,7 @@ public class GameRoundController {
 
     @MessageMapping("/clickaround")
     public void pickClick(@Payload final PickClickRequest request) {
+        System.out.println(request.getRoundState());
         template.convertAndSend("/sub/clickaround/" + request.getGameId(), request);
     }
 

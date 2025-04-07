@@ -19,8 +19,11 @@ public class GameRound {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Game game;
-
     private int roundNumber;
+
+    private int readyCount;
+
+    @Enumerated(EnumType.STRING)
     private RoundState roundState;
 
     private String blueBan1;
@@ -45,13 +48,17 @@ public class GameRound {
     private String redPick4;
     private String redPick5;
 
-    public void moveToNextState() {
-        roundState = RoundState.values()[this.roundState.ordinal()+1];
+    public void moveToNextState(RoundState state) {
+        roundState = RoundState.values()[state.ordinal()+1];
     }
 
     public GameRound(Game game, int roundNumber, RoundState roundState) {
         this.game = game;
         this.roundNumber = roundNumber;
         this.roundState = roundState;
+    }
+
+    public void ready() {
+        readyCount++;
     }
 }

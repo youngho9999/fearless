@@ -1,7 +1,6 @@
 package live.feardraft.game.dto;
 
 import live.feardraft.game.Game;
-import live.feardraft.game.types.GameState;
 import live.feardraft.game.types.ModeType;
 import live.feardraft.game.types.SeriesType;
 import live.feardraft.game.types.TimerType;
@@ -20,7 +19,6 @@ public class GameSettingResponse {
     private ModeType modeType;
     private SeriesType seriesType;
     private TimerType timerType;
-    private GameState gameState;
 
     public GameSettingResponse(Game game) {
         this.gameId = game.getGameId();
@@ -29,6 +27,5 @@ public class GameSettingResponse {
         this.modeType = game.getModeType();
         this.seriesType = game.getSeriesType();
         this.timerType = game.getTimerType();
-        this.gameState = game.getGameState();
     }
 }
