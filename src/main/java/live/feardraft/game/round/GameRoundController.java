@@ -1,5 +1,6 @@
 package live.feardraft.game.round;
 
+import live.feardraft.game.dto.NextRoundRequest;
 import live.feardraft.game.dto.PickClickRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -24,6 +25,12 @@ public class GameRoundController {
     public void pickLock(@Payload final PickClickRequest request) {
         gameRoundService.pickLock(request);
         template.convertAndSend("/sub/pick/" + request.getGameId(), request);
+    }
+
+    @MessageMapping("/nextround")
+    public void pickLock(@Payload final NextRoundRequest request) {
+        System.out.println(request.getTeam());
+        template.convertAndSend("/sub/nextround/" + request.getGameId(), request);
     }
 
 }
