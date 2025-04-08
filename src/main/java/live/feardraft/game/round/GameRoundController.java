@@ -17,7 +17,6 @@ public class GameRoundController {
 
     @MessageMapping("/clickaround")
     public void pickClick(@Payload final PickClickRequest request) {
-        System.out.println(request.getRoundState());
         template.convertAndSend("/sub/clickaround/" + request.getGameId(), request);
     }
 
@@ -29,7 +28,6 @@ public class GameRoundController {
 
     @MessageMapping("/nextround")
     public void pickLock(@Payload final NextRoundRequest request) {
-        System.out.println(request.getTeam());
         template.convertAndSend("/sub/nextround/" + request.getGameId(), request);
     }
 
