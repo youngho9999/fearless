@@ -1,3 +1,9 @@
+champion: ${CHAMPION}
+championlane: ${CHAMPION_LANE}
+
+front:
+  url: ${FRONT_URL}
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

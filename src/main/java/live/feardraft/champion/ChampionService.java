@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import live.feardraft.champion.champline.ChampionLane;
 import live.feardraft.champion.champline.ChampionLaneRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -19,11 +20,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ChampionService {
 
-    private static final String CHAMPIONS_URL = "https://ddragon.leagueoflegends.com/cdn/15.6.1/data/ko_KR/champion.json";
     private final ChampionRepository championRepository;
     private final ChampionLaneRepository championLaneRepository;
 
+    @Value("${champion}")
+    private String CHAMPIONS_URL;
+
     public void insertChampion() throws JsonProcessingException {
+
+        championRepository.deleteAll();
 
         RestTemplate restTemplate = new RestTemplate();
         String jsonContent = restTemplate.getForObject(CHAMPIONS_URL, String.class);
@@ -50,7 +55,6 @@ public class ChampionService {
         }
 
         championRepository.saveAll(champions);
-
     }
 
     @Transactional
@@ -58,7 +62,6 @@ public class ChampionService {
         List<Champion> champions = championRepository.findAll();
 
         for(Champion champion : champions) {
-
             List<ChampionLane> lanes = championLaneRepository.findByChampion(champion.getName());
             List<String> laneStrings = lanes.stream().map(ChampionLane::getLane).toList();
 

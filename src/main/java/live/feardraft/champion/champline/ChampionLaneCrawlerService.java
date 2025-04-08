@@ -5,6 +5,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,7 +18,12 @@ public class ChampionLaneCrawlerService {
 
     private final ChampionLaneRepository championLaneRepository;
 
+    @Value("${championlane}")
+    private String laneCrawlUrl;
+
     public void crawlChampions() {
+
+        championLaneRepository.deleteAll();
 
         ChampLane[] lanes = ChampLane.values();
 
@@ -29,16 +35,11 @@ public class ChampionLaneCrawlerService {
                 championLaneRepository.save(championLane);
             }
         }
-
     }
 
-
-
-
-    public List<String> crawlChampionNamesForEachLane(String lane) {
+    private List<String> crawlChampionNamesForEachLane(String lane) {
         List<String> championNames = new ArrayList<>();
-
-        String url = "https://op.gg/champions?position=" + lane;
+        String url = laneCrawlUrl + lane;
 
         try {
             // URL에서 HTML 문서 가져오기
@@ -62,14 +63,11 @@ public class ChampionLaneCrawlerService {
                     }
                 } catch (Exception e) {
                     // 개별 행 처리 중 오류는 무시하고 다음 행으로 진행
-                    continue;
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return championNames;
     }
-
 }
