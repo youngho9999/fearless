@@ -35,4 +35,9 @@ public class GameController {
         template.convertAndSend("/sub/ready/" + request.getGameId(), readyCount);
     }
 
+    @GetMapping("/test")
+    public String test() {
+        return "TEST is DONE";
+    }
+
 }
