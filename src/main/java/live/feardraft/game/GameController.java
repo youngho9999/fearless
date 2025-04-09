@@ -3,9 +3,7 @@ package live.feardraft.game;
 import live.feardraft.game.dto.GameCreateRequest;
 import live.feardraft.game.dto.GameReadyRequest;
 import live.feardraft.game.dto.GameSettingResponse;
-import live.feardraft.game.dto.PickClickRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -13,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/game")
+@RequestMapping("/api/game")
 public class GameController {
 
     private final GameService gameService;
