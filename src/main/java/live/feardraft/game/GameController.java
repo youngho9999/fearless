@@ -32,10 +32,4 @@ public class GameController {
         int readyCount = gameService.setReady(request);
         template.convertAndSend("/sub/ready/" + request.getGameId(), readyCount);
     }
-
-    @GetMapping("/test")
-    public String test() {
-        return "TEST is DONE";
-    }
-
 }
