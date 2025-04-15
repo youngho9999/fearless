@@ -1,6 +1,5 @@
 package live.feardraft.champion.crawl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import live.feardraft.champion.ChampionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

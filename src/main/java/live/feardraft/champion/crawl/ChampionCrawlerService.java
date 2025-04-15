@@ -26,9 +26,9 @@ public class ChampionCrawlerService {
     private final ChampionLaneRepository championLaneRepository;
     private final ChampionRepository championRepository;
 
-    @Value("${championlane}")
+    @Value("${champion.lane}")
     private String CHAMPION_LANE_URL;
-    @Value("${champion}")
+    @Value("${champion.url}")
     private String CHAMPIONS_URL;
 
     public void crawlChampions() {

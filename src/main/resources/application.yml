@@ -1,5 +1,6 @@
-champion: ${CHAMPION}
-championlane: ${CHAMPION_LANE}
+champion:
+  url: ${CHAMPION}
+  lane: ${CHAMPION_LANE}
 
 front:
   url: ${FRONT_URL}
