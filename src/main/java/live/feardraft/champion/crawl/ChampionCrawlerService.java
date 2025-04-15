@@ -1,5 +1,10 @@
 package live.feardraft.champion.crawl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import live.feardraft.champion.Champion;
+import live.feardraft.champion.ChampionRepository;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -7,23 +12,61 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class ChampionCrawlerService {
 
     private final ChampionLaneRepository championLaneRepository;
+    private final ChampionRepository championRepository;
 
     @Value("${championlane}")
-    private String laneCrawlUrl;
+    private String CHAMPION_LANE_URL;
+    @Value("${champion}")
+    private String CHAMPIONS_URL;
+
+    public void crawlChampions() {
+
+        championRepository.deleteAll();
+
+        RestTemplate restTemplate = new RestTemplate();
+        String jsonContent = restTemplate.getForObject(CHAMPIONS_URL, String.class);
+
+        List<Champion> champions = new ArrayList<>();
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        JsonNode rootNode = null;
+        try {
+            rootNode = objectMapper.readTree(jsonContent);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        JsonNode dataNode = rootNode.path("data");
+
+        // data 노드 내부의 모든 챔피언 객체를 순회
+        Iterator<String> fieldNames = dataNode.fieldNames();
+        while (fieldNames.hasNext()) {
+            String fieldName = fieldNames.next();
+            JsonNode championNode = dataNode.get(fieldName);
+
+            String id = championNode.path("id").asText();
+            String name = championNode.path("name").asText();
+            // image.full 속성 값을 가져옴
+            String image = championNode.path("image").path("full").asText();
+            String key = championNode.path("key").asText();
+
+            Champion champion = new Champion(id, name, image,key);
+            champions.add(champion);
+        }
+
+        championRepository.saveAll(champions);
+    }
 
     public void crawlChampionLanes() {
 
@@ -43,7 +86,7 @@ public class ChampionCrawlerService {
 
     private List<String> crawlChampionNamesForEachLane(String lane) {
         List<String> championNames = new ArrayList<>();
-        String url = laneCrawlUrl + lane;
+        String url = CHAMPION_LANE_URL + lane;
 
         try {
             // URL에서 HTML 문서 가져오기

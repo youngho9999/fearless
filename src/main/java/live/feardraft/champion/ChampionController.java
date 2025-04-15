@@ -15,16 +15,6 @@ public class ChampionController {
 
     private final ChampionService championService;
 
-    @GetMapping("/insert")
-    public void insertChampion() throws JsonProcessingException {
-        championService.insertChampion();
-    }
-
-    @GetMapping("/setlane")
-    public void setLane() {
-        championService.setLane();
-    }
-
     @GetMapping("/champions")
     public List<ChampionResponse> getAllChampions() {
         return championService.getAllChampions();
