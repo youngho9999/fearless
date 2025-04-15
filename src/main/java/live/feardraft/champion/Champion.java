@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@ToString
 @Entity
 @Getter
 @AllArgsConstructor
@@ -23,6 +22,7 @@ public class Champion {
     private String id;
     private String name;
     private String image;
+    private String number;
 
     private String positions;  // "TOP,JUNGLE,MID,AD,SUPPORT"
 
@@ -44,9 +44,10 @@ public class Champion {
         }
     }
 
-    public Champion(String id, String name, String image) {
+    public Champion(String id, String name, String image, String number) {
         this.id = id;
         this.name = name;
         this.image = image;
+        this.number = number;
     }
 }

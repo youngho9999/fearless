@@ -6,11 +6,17 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.io.IOException;
+import java.net.http.HttpHeaders;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -69,5 +75,69 @@ public class ChampionLaneCrawlerService {
             e.printStackTrace();
         }
         return championNames;
+    }
+
+    public void crawlLckData() {
+
+        String url = "url"; // 요청할 URL
+
+        WebClient webClient = WebClient.create(url);
+
+        // 요청 바디 구성
+        Map<String, Object> body = new HashMap<>();
+        body.put("operationName", "ListChampionStatisticsByTournament");
+
+        Map<String, String> variables = new HashMap<>();
+        variables.put("tournamentId", "1253");
+        body.put("variables", variables);
+
+        body.put("query", """
+            fragment CoreChampionStatistic on ChampionStatistic {
+              tournamentId
+              championId
+              bans
+              presence
+              position
+              games
+              wins
+              loses
+              winRate
+              kda
+              kills
+              deaths
+              assists
+              wardsPlaced
+              wardsKilled
+              dpm
+              dtpm
+              gpm
+              cspm
+              dpgr
+              firstBlood
+              firstTower
+              __typename
+            }
+            query ListChampionStatisticsByTournament($tournamentId: ID!, $teamId: ID, $playerId: ID) {
+              championStatisticsByTournament(
+                tournamentId: $tournamentId
+                teamId: $teamId
+                playerId: $playerId
+              ) {
+                ...CoreChampionStatistic
+                __typename
+              }
+            }
+        """);
+
+        // 비동기 요청 실행
+        Mono<String> response = webClient.post()
+                .header("Content-Type", "application/json")
+                .bodyValue(body)
+                .retrieve()
+                .bodyToMono(String.class);
+
+        // 응답 출력
+        response.subscribe(System.out::println);
+
     }
 }

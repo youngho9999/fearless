@@ -17,4 +17,9 @@ public class ChampionLaneCrawlerController {
         championCrawlerService.crawlChampions();
     }
 
+    @GetMapping("/lck")
+    public void crawlLckData() {
+        championCrawlerService.crawlLckData();
+    }
+
 }

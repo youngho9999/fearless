@@ -21,4 +21,4 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
 logging:
   level:
-    root: debug
+    root: info

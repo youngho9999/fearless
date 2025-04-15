@@ -49,8 +49,9 @@ public class ChampionService {
             String name = championNode.path("name").asText();
             // image.full 속성 값을 가져옴
             String image = championNode.path("image").path("full").asText();
+            String key = championNode.path("key").asText();
 
-            Champion champion = new Champion(id, name, image);
+            Champion champion = new Champion(id, name, image,key);
             champions.add(champion);
         }
 
