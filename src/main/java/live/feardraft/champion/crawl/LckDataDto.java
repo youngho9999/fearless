@@ -1,4 +1,4 @@
-package live.feardraft.champion.champline;
+package live.feardraft.champion.crawl;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

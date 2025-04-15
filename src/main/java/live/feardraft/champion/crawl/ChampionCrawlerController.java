@@ -1,5 +1,6 @@
-package live.feardraft.champion.champline;
+package live.feardraft.champion.crawl;
 
+import live.feardraft.champion.ChampionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,13 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class ChampionLaneCrawlerController {
+public class ChampionCrawlerController {
 
-    private final ChampionLaneCrawlerService championCrawlerService;
+    private final ChampionCrawlerService championCrawlerService;
+    private final ChampionService championService;
 
-    @GetMapping("/crawl")
-    public void crawlChampions() {
-        championCrawlerService.crawlChampions();
+    @GetMapping("/crawl/lane")
+    public void crawlChampionLanes() {
+        championCrawlerService.crawlChampionLanes();
+        championService.setLane();
     }
 
     @GetMapping("/lck")

@@ -1,4 +1,4 @@
-package live.feardraft.champion.champline;
+package live.feardraft.champion.crawl;
 
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
@@ -6,13 +6,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
-import java.net.http.HttpHeaders;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,14 +18,14 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class ChampionLaneCrawlerService {
+public class ChampionCrawlerService {
 
     private final ChampionLaneRepository championLaneRepository;
 
     @Value("${championlane}")
     private String laneCrawlUrl;
 
-    public void crawlChampions() {
+    public void crawlChampionLanes() {
 
         championLaneRepository.deleteAll();
 
